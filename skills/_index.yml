@@ -1,0 +1,37 @@
+generated: '2026-08-26'
+method: generated
+source: openapi/samaya-ai-public-api-openapi.json
+api: Samaya Public API
+note: >-
+  Skills are grounded exclusively in the six operationIds published at
+  https://api.samaya.ai/v1/openapi.json. No skill was written against the MCP or GraphQL surfaces:
+  both are auth-gated and their operations are not published anywhere, so grounding is impossible
+  without fabricating tool names.
+skills:
+- name: samaya-ai-provision-team-membership
+  file: samaya-ai-provision-team-membership.md
+  description: >-
+    Bulk add or remove Samaya users from a team by email, handling partial success and reversing a
+    change without losing roles.
+  operations:
+  - samaya_api_rest_views_teams_list_orgs
+  - samaya_api_rest_views_teams_list_teams
+  - samaya_api_rest_views_teams_list_team_members
+  - samaya_api_rest_views_teams_add_team_members
+  - samaya_api_rest_views_teams_remove_team_members
+  writes: true
+  reversible: true
+  reversal_window: unstated
+- name: samaya-ai-audit-org-users
+  file: samaya-ai-audit-org-users.md
+  description: >-
+    Enumerate every user and team in a Samaya organization and produce a per-user access map with
+    inactive-account flags.
+  operations:
+  - samaya_api_rest_views_teams_list_orgs
+  - samaya_api_rest_views_teams_list_users
+  - samaya_api_rest_views_teams_list_teams
+  - samaya_api_rest_views_teams_list_team_members
+  writes: false
+  reversible: na
+skill_count: 2

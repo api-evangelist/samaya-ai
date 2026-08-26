@@ -1,0 +1,65 @@
+generated: '2026-08-26'
+method: derived
+source: >-
+  openapi/samaya-ai-public-api-openapi.json and mcp/samaya-ai-mcp.yml
+note: >-
+  The two Samaya machine surfaces do not overlap at all. The published OpenAPI is a tenant
+  provisioning API (orgs, teams, members, users); the MCP server is the financial-research agent
+  surface. There is therefore no tool-to-operation binding to record, and the crosswalk's value here
+  is the divergence itself: every published REST operation is REST-only, and the entire agent
+  capability set sits behind OAuth with no public schema.
+surfaces:
+  openapi:
+    url: https://api.samaya.ai/v1/openapi.json
+    file: openapi/samaya-ai-public-api-openapi.json
+    gated: false
+    operations: 6
+  graphql:
+    endpoint: https://api.samaya.ai/graphql/
+    gated: true
+    gate: HTTP 401 on anonymous introspection
+  mcp:
+    url: https://mcp.samaya.ai/mcp
+    gated: true
+    gate: HTTP 401 invalid_token, OAuth 2.1 required
+    tools_enumerable: false
+crosswalk: []
+mcp_only: []
+mcp_only_note: >-
+  Cannot be enumerated. The tool list requires an authenticated tools/list call; no tool names are
+  published in llms.txt, docs, or any MCP registry.
+rest_only:
+- operationId: samaya_api_rest_views_teams_list_orgs
+  method: GET
+  path: /v1/orgs/
+  reason: provisioning surface, no counterpart tool published
+- operationId: samaya_api_rest_views_teams_list_teams
+  method: GET
+  path: /v1/orgs/{org_id}/teams
+  reason: provisioning surface, no counterpart tool published
+- operationId: samaya_api_rest_views_teams_list_team_members
+  method: GET
+  path: /v1/orgs/{org_id}/teams/{team_id}/members
+  reason: provisioning surface, no counterpart tool published
+- operationId: samaya_api_rest_views_teams_add_team_members
+  method: POST
+  path: /v1/orgs/{org_id}/teams/{team_id}/members
+  reason: provisioning surface, no counterpart tool published
+- operationId: samaya_api_rest_views_teams_remove_team_members
+  method: DELETE
+  path: /v1/orgs/{org_id}/teams/{team_id}/members
+  reason: provisioning surface, no counterpart tool published
+- operationId: samaya_api_rest_views_teams_list_users
+  method: GET
+  path: /v1/orgs/{org_id}/users
+  reason: provisioning surface, no counterpart tool published
+coverage:
+  rest_operations: 6
+  mcp_tools: null
+  bound: 0
+  rest_only: 6
+  mcp_only: null
+  confidence: high
+  confidence_note: >-
+    High confidence in the divergence (the REST spec is fully readable and describes only
+    provisioning); the MCP side is unknown rather than empty.

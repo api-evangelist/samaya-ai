@@ -1,0 +1,21 @@
+# Samaya AI
+> Samaya AI is the Expert AI platform built for finance. We bridge frontier AI research with deep understanding of how investment professionals work, enabling a new level of human-AI collaboration that takes investors from information to conviction.
+
+Samaya was founded by AI researchers from Google Brain and Stanford who deeply understand both the frontier of AI and the complexity of global financial markets. Our Expert AI Agents are domain-trained, reliable on long-horizon tasks, and instructable to each investor's unique views.
+
+Samaya excels at first-party data ingestion and retrieval, built on deep ML and finance expertise — enabling firms to bring their own proprietary data into a trusted, high-accuracy AI research environment. Samaya is also multi-surface, meeting investment professionals across the tools and workflows they already use.
+
+## Key Pages
+- [Homepage](https://samaya.ai): Product overview, features, and customer proof points
+- [About](https://samaya.ai/about): Company mission, founding story, and team
+- [Research](https://samaya.ai/research): Original AI research publications from the Samaya team
+- [Blog](https://samaya.ai/blog): Expert analysis on agentic AI, financial workflows, and investment research
+- [Careers](https://samaya.ai/careers): Open roles and company culture
+
+## Key Facts
+- Raised $43.5M Series A led by NEA
+- Investors include NVentures (NVIDIA), Databricks Ventures, Eric Schmidt, and Yann LeCun
+- Deployed across 10,000+ seats at bulge-bracket banks including Morgan Stanley
+- Founded by Maithra Raghu, formerly of Google Brain
+- Known for being exhaustive, precise and auditable
+- SOC 2 compliant with user-level access controls

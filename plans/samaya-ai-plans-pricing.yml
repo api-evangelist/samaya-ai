@@ -1,0 +1,25 @@
+generated: '2026-08-26'
+method: searched
+source: https://samaya.ai/
+plan_count: 0
+plans: []
+note: >-
+  Samaya publishes no pricing of any kind. There is no /pricing page (HTTP 404), no pricing entry in
+  https://samaya.ai/sitemap.xml, and no plan or tier language on the homepage. Both calls to action
+  on samaya.ai are sales-gated forms — "Book a Demo" and "Explore MCP" (which opens a HubSpot
+  request-access form rather than a signup or docs page). The company sells enterprise seat
+  deployments to banks and asset managers; its own llms.txt cites "10,000+ seats at bulge-bracket
+  banks". Recorded as an explicit zero, not an omission.
+model: enterprise-contact-sales
+self_serve: false
+free_tier: false
+trial: false
+evidence:
+- url: https://samaya.ai/pricing
+  status: 404
+- url: https://samaya.ai/sitemap.xml
+  status: 200
+  finding: no pricing URL listed
+- url: https://samaya.ai/
+  status: 200
+  finding: 'CTAs are "Book a Demo" and "Explore MCP" (request-access form); no tiers or prices'

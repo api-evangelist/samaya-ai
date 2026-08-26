@@ -1,0 +1,54 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  https://status.samaya.ai/, https://status.samaya.ai/feed.rss, https://api.samaya.ai/v1/openapi.json,
+  https://samaya.ai/sitemap.xml
+versioning:
+  scheme: path
+  current: v1
+  evidence: >-
+    Every path in the published OpenAPI is prefixed /v1/ and the spec is served at
+    /v1/openapi.json. info.version is "1.0".
+  policy_published: false
+  policy_note: No versioning policy page exists on samaya.ai (site has no /docs, /changelog or /legal).
+deprecation:
+  policy_published: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No operation in the published OpenAPI carries deprecated: true, and no deprecation or sunset
+    policy is published anywhere on the Samaya surface. Recorded as absent, not as compliant.
+status_page:
+  url: https://status.samaya.ai/
+  status: 200
+  vendor: incident.io
+  feed: https://status.samaya.ai/feed.rss
+  feed_status: 200
+  history: https://status.samaya.ai/history
+  components:
+  - name: Samaya QA
+    uptime: 99.89%
+  - name: Samaya Agent
+    uptime: 100%
+  - name: Samaya API
+    uptime: 100%
+  - name: Authentication
+    uptime: 99.93%
+  note: >-
+    Uptime figures are as displayed by the vendor page on 2026-08-26 for its default window. The
+    presence of a distinct "Samaya API" component is independent confirmation that the API surface is
+    an operated product, not an internal detail.
+sla:
+  published: false
+  note: No public SLA. Samaya sells enterprise; terms are presumed contractual and are not published.
+changelog:
+  published: false
+  note: >-
+    No /changelog page (404) and no changelog entry in the sitemap. The blog at samaya.ai/blog is
+    research and announcement writing, not a dated product changelog.
+support:
+  email: hello@samaya.ai
+  feedback_email: feedback@samaya.ai
+  source: https://samaya.ai/ and https://status.samaya.ai/

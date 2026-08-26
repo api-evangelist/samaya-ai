@@ -1,0 +1,76 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  openapi/samaya-ai-public-api-openapi.json (derived) plus live probes of
+  https://mcp.samaya.ai/mcp, https://mcp.samaya.ai/.well-known/oauth-authorization-server,
+  https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp and https://api.samaya.ai/graphql/
+summary:
+  types:
+  - http
+  - oauth2
+  surfaces: 3
+  note: >-
+    Two distinct authentication models. The REST provisioning API uses a WorkOS
+    machine-to-machine bearer token. The remote MCP server uses full OAuth 2.1 with dynamic
+    client registration and PKCE, advertised via RFC 9728 protected-resource metadata.
+schemes:
+- name: WorkOsM2MAuth
+  type: http
+  scheme: bearer
+  surface: Samaya Public API
+  applies_to: https://api.samaya.ai
+  description: >-
+    HTTP bearer token issued by WorkOS as a machine-to-machine credential. Declared in the
+    published OpenAPI as the only securityScheme and applied to all six operations.
+  sources:
+  - openapi/samaya-ai-public-api-openapi.json
+  method: derived
+- name: MCPOAuth
+  type: oauth2
+  surface: Samaya MCP Server
+  applies_to: https://mcp.samaya.ai/mcp
+  description: >-
+    OAuth 2.1 authorization-code flow with PKCE. An anonymous JSON-RPC tools/list POST returns
+    HTTP 401 with WWW-Authenticate Bearer error="invalid_token" and
+    resource_metadata="https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp".
+  flows:
+    authorizationCode:
+      authorizationUrl: https://mcp.samaya.ai/authorize
+      tokenUrl: https://mcp.samaya.ai/token
+      refreshUrl: https://mcp.samaya.ai/token
+      scopes: {}
+  registration_endpoint: https://mcp.samaya.ai/register
+  revocation_endpoint: https://mcp.samaya.ai/revoke
+  issuer: https://mcp.samaya.ai/
+  code_challenge_methods_supported:
+  - S256
+  token_endpoint_auth_methods_supported:
+  - client_secret_post
+  - client_secret_basic
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  bearer_methods_supported:
+  - header
+  dynamic_client_registration: true
+  sources:
+  - well-known/samaya-ai-oauth-authorization-server.json
+  - well-known/samaya-ai-oauth-protected-resource.json
+  method: probed
+- name: GraphQLSessionAuth
+  type: unknown
+  surface: Samaya GraphQL API
+  applies_to: https://api.samaya.ai/graphql/
+  description: >-
+    Anonymous POST of the introspection query returns HTTP 401 with the plain-text body
+    "Unauthorized". The credential type is not advertised anonymously; access-control-allow-origin
+    is pinned to https://app.samaya.ai, indicating a browser-session-scoped app surface.
+  method: probed
+  evidence:
+    url: https://api.samaya.ai/graphql/
+    http_status: 401
+    body: Unauthorized
+docs: null
+docs_note: >-
+  Samaya publishes no public authentication documentation page. The auth model above was read
+  entirely from the machine-readable surfaces the company serves.

@@ -1,0 +1,83 @@
+generated: '2026-08-26'
+method: probed
+source: live GET of /.well-known/* on every Samaya host in apis.yml
+hit_count: 2
+note: >-
+  app.samaya.ai is a single-page-app catch-all: every /.well-known/* path returns HTTP 200 with the
+  same 1,328-byte HTML shell, including the deliberately bogus control path
+  /.well-known/soft404control-xyz. No document was saved from that host and it emits no pointer.
+  The two real hits are both on the MCP host and are the OAuth discovery pair the MCP server's own
+  401 challenge points at.
+hosts:
+- host: https://mcp.samaya.ai
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: samaya-ai-oauth-authorization-server.json
+    content_type: application/json
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    file: samaya-ai-oauth-protected-resource.json
+    content_type: application/json
+    spec: RFC 9728
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://samaya.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.samaya.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app.samaya.ai
+  documents: []
+  soft_404_control:
+    path: /.well-known/soft404control-xyz
+    status: 200
+    bytes: 1328
+    content_type: text/html
+    verdict: >-
+      SPA catch-all. Every probed /.well-known/* path returned an identical 200/1328-byte HTML shell,
+      so no 200 on this host is evidence of a served document.

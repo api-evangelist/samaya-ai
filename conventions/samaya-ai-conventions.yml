@@ -1,0 +1,132 @@
+generated: '2026-08-26'
+method: derived
+source: >-
+  openapi/samaya-ai-public-api-openapi.json, authentication/samaya-ai-authentication.yml,
+  errors/samaya-ai-problem-types.yml, well-known/samaya-ai-well-known.yml
+scope: >-
+  Cross-cutting runtime semantics for the Samaya Public API (REST). The MCP and GraphQL surfaces are
+  auth-gated and their conventions could not be observed; they are marked unknown rather than assumed.
+auth:
+  style: bearer
+  header: 'Authorization: Bearer <token>'
+  scheme_name: WorkOsM2MAuth
+  issuer: WorkOS (machine-to-machine)
+  applied: all six operations
+  see: authentication/samaya-ai-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  evidence: >-
+    No Idempotency-Key (or equivalent) parameter appears on any operation in the published OpenAPI,
+    and no idempotency behaviour is documented anywhere. The two write operations are bulk
+    add/remove by email, which are naturally convergent, but the API offers no replay-safety
+    mechanism an agent can rely on.
+  grade: absent
+pagination:
+  style: cursor
+  applies_to:
+  - samaya_api_rest_views_teams_list_team_members
+  - samaya_api_rest_views_teams_list_users
+  request_params:
+    cursor:
+      in: query
+      type: string
+      required: false
+    limit:
+      in: query
+      type: integer
+      required: false
+  response_fields:
+    data: array of results
+    next_cursor: opaque cursor for the following page (optional, absent on the last page)
+    has_more: boolean, required
+  not_paginated:
+  - samaya_api_rest_views_teams_list_orgs
+  - samaya_api_rest_views_teams_list_teams
+  note: >-
+    List Orgs and List Teams return a bare wrapped array (orgs[] / teams[]) with no cursor at all, so
+    two of the four read operations have no pagination contract.
+filtering:
+  supported: true
+  fields:
+    email:
+      operation: samaya_api_rest_views_teams_list_users
+      in: query
+      type: string
+      note: optional exact-match filter on org user listing
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+request_id_tracing:
+  header: null
+  observed: >-
+    Responses carry cf-ray (Cloudflare) and x-envoy-upstream-service-time / x-envoy-decorator-operation
+    (Istio/Envoy) headers. These are infrastructure identifiers, not a documented correlation ID an
+    agent can quote in a support ticket.
+  documented: false
+versioning:
+  style: url-path
+  current: v1
+  see: lifecycle/samaya-ai-lifecycle.yml
+error_envelope:
+  rfc9457: false
+  shape: >-
+    Undeclared for the REST surface (only 200 responses exist in the spec). Bulk writes return
+    per-item errors[] inside a 200. See errors/samaya-ai-problem-types.yml.
+rate_limit_signaling:
+  headers_documented: []
+  observed_headers: []
+  status_on_exhaustion: unknown
+  see: rate-limits/samaya-ai-rate-limits.yml
+media_types:
+  request: application/json
+  response: application/json
+identifiers:
+  org_id: integer
+  team_id: integer
+  member: email address (string) — members are addressed by email, not by an opaque id
+reversibility:
+  applicable: true
+  applicable_note: >-
+    The API has a real write surface — two bulk mutation operations on team membership.
+  grade: documented
+  grade_basis: >-
+    A reversal path exists and is a first-class published operation, but NO window, retention period
+    or restore semantics are stated anywhere, so this cannot be graded verified. Nothing in Samaya's
+    material states how long a removed member's context, documents or history survive removal, or
+    whether re-adding restores them.
+  operations:
+  - write: samaya_api_rest_views_teams_add_team_members
+    write_path: POST /v1/orgs/{org_id}/teams/{team_id}/members
+    reversal: samaya_api_rest_views_teams_remove_team_members
+    reversal_path: DELETE /v1/orgs/{org_id}/teams/{team_id}/members
+    reversal_kind: inverse-operation
+    window: unstated
+    window_source: null
+    note: >-
+      Add and remove are exact inverses addressed by the same email list, so an accidental bulk add
+      is undoable. Partial success on either side means the reversal set must be read from the
+      response (added[] / removed[]), not assumed from the request.
+  - write: samaya_api_rest_views_teams_remove_team_members
+    write_path: DELETE /v1/orgs/{org_id}/teams/{team_id}/members
+    reversal: samaya_api_rest_views_teams_add_team_members
+    reversal_path: POST /v1/orgs/{org_id}/teams/{team_id}/members
+    reversal_kind: inverse-operation
+    window: unstated
+    window_source: null
+    note: >-
+      Re-adding restores membership, but whether it restores the member's prior role, saved work or
+      document access is NOT stated. MemberEntry.role defaults to "MEMBER", so a naive reversal can
+      silently demote a previously elevated member. Read the role from the original listing before
+      reversing.
+  no_reversal:
+  - operation: null
+    note: The four read operations are non-mutating; reversibility does not apply.
+dry_run_mode:
+  supported: false
+  evidence: No preview, validate-only or dry-run parameter appears on either write operation.

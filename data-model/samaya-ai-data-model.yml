@@ -1,0 +1,92 @@
+generated: '2026-08-26'
+method: derived
+source: openapi/samaya-ai-public-api-openapi.json
+note: >-
+  Derived from components.schemas $ref links and the path hierarchy of the published OpenAPI. Covers
+  the provisioning surface only — Samaya's research entities (documents, filings, agents, answers)
+  live behind the auth-gated MCP and GraphQL surfaces and are deliberately not modelled here.
+entities:
+- name: Org
+  schema: OrgOut
+  key: id (integer)
+  fields:
+    id: integer, required
+    name: string, required
+  path: /v1/orgs/
+- name: Team
+  schema: TeamOut
+  key: id (integer)
+  fields:
+    id: integer, required
+    name: string, required
+    is_customer_modifiable: boolean, required
+  path: /v1/orgs/{org_id}/teams
+  note: >-
+    The listing excludes per-user "My Documents" teams. is_customer_modifiable flags whether the
+    caller may mutate membership — an agent must check it before attempting a write.
+- name: TeamMember
+  schema: TeamMemberOut
+  key: email (string)
+  fields:
+    email: string, required
+    role: string, required (MemberEntry.role defaults to "MEMBER")
+    is_active: boolean, required
+  path: /v1/orgs/{org_id}/teams/{team_id}/members
+- name: User
+  schema: UserOut
+  key: email (string)
+  fields:
+    email: string, required
+    is_active: boolean, required
+  path: /v1/orgs/{org_id}/users
+relationships:
+- from: Org
+  to: Team
+  kind: has_many
+  via: org_id (path parameter)
+- from: Team
+  to: TeamMember
+  kind: has_many
+  via: team_id (path parameter)
+- from: Org
+  to: User
+  kind: has_many
+  via: org_id (path parameter)
+- from: TeamMember
+  to: User
+  kind: belongs_to
+  via: email
+  note: >-
+    Not a declared $ref — inferred from the shared email key. TeamMemberOut and UserOut are separate
+    schemas that both address the same principal by email address; the spec declares no id linking
+    them.
+envelopes:
+- name: OrgListResponse
+  wraps: OrgOut[]
+  field: orgs
+- name: TeamListResponse
+  wraps: TeamOut[]
+  field: teams
+- name: PaginatedTeamMembersResponse
+  wraps: TeamMemberOut[]
+  field: data
+  pagination: next_cursor, has_more
+- name: PaginatedUsersResponse
+  wraps: UserOut[]
+  field: data
+  pagination: next_cursor, has_more
+- name: BulkAddResponse
+  wraps: AddedMember[] + MemberError[]
+  field: added, errors
+- name: BulkRemoveResponse
+  wraps: string[] + MemberError[]
+  field: removed, errors
+identifier_scheme:
+  orgs_and_teams: sequential integers, not opaque prefixed ids
+  principals: email address
+  note: >-
+    Integer surrogate keys mean org and team identifiers are guessable/enumerable. Tenancy is
+    enforced by the WorkOS M2M token's customer scope ("List all organizations under the
+    authenticated customer"), not by identifier opacity.
+schema_count: 15
+entity_count: 4

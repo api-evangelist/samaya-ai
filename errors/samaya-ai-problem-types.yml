@@ -1,0 +1,72 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  openapi/samaya-ai-public-api-openapi.json (derived) plus observed live responses from
+  https://api.samaya.ai/graphql/ and https://mcp.samaya.ai/mcp
+format: none
+format_note: >-
+  Not RFC 9457. No operation in the published OpenAPI declares application/problem+json, and no
+  observed error body carries type/title/status/detail members.
+spec_gap: >-
+  All six published operations declare ONLY a 200 response. There is no 400, 401, 403, 404, 409, 422,
+  429 or 5xx anywhere in the contract, so an agent generated from this spec has no idea what failure
+  looks like — including for the two bulk write operations, which the descriptions say "return
+  partial success". This is the single largest contract-quality gap on the REST surface.
+envelope:
+  rest: unknown
+  rest_note: >-
+    Undeclared and unobservable anonymously (every operation requires a WorkOS bearer token).
+  partial_success:
+    applies_to:
+    - samaya_api_rest_views_teams_add_team_members
+    - samaya_api_rest_views_teams_remove_team_members
+    shape: >-
+      Both bulk operations return HTTP 200 carrying a per-item error array rather than failing the
+      request. Errors are therefore in-band, not in the status code.
+    schemas:
+    - BulkAddResponse -> added[] + errors[]
+    - BulkRemoveResponse -> removed[] + errors[]
+    - MemberError -> { email, detail }
+problem_types:
+- id: member-error
+  source: openapi components.schemas.MemberError
+  http_status: 200
+  surface: Samaya Public API
+  title: Per-member bulk operation failure
+  fields:
+    email: the member address the failure applies to
+    detail: free-text explanation
+  remediation: >-
+    Inspect errors[] on every 200 from the bulk add/remove endpoints. A 200 does not mean every
+    member in the request succeeded.
+- id: invalid_token
+  source: observed
+  http_status: 401
+  surface: Samaya MCP Server
+  title: invalid_token
+  detail: >-
+    Authentication failed. The provided bearer token is invalid, expired, or no longer recognized by
+    the server.
+  headers:
+    WWW-Authenticate: >-
+      Bearer error="invalid_token", error_description="...",
+      resource_metadata="https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp"
+  remediation: >-
+    Clear cached tokens in the MCP client and reconnect; the client re-registers via the dynamic
+    client registration endpoint and obtains new tokens. Verbatim from the server's own
+    error_description.
+  evidence:
+    url: https://mcp.samaya.ai/mcp
+    status: 401
+- id: graphql-unauthorized
+  source: observed
+  http_status: 401
+  surface: Samaya GraphQL API
+  title: Unauthorized
+  detail: plain-text body "Unauthorized" (12 bytes), no JSON envelope, no GraphQL errors[] array
+  remediation: Authenticate through the app session at app.samaya.ai; no anonymous introspection.
+  evidence:
+    url: https://api.samaya.ai/graphql/
+    status: 401
+docs: null
+docs_note: Samaya publishes no error reference page.

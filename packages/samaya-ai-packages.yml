@@ -1,0 +1,58 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, crates.io, rubygems.org, https://github.com/samaya-ai and
+  https://samaya.ai/
+package_count: 0
+packages: []
+note: >-
+  No first-party Samaya client library exists on any public registry. The npm package "samaya"
+  (v0.0.1, rabingaire/samaya) is an unrelated commit-time utility and the PyPI package "samaya"
+  (v0.1.1, Bhavesh Adhikari) is a Nepali date-conversion library — neither is Samaya AI's. crates.io
+  and RubyGems return nothing. The samaya-ai GitHub organization has four public repos (sec-edgar,
+  forkedTensorRT, links, frontier-finance) and none is a client SDK; frontier-finance is the
+  company's own benchmark grader. Consistent with the product posture: the intended integration path
+  is the MCP server, not a language SDK. No SDKs pointer is emitted, because none exists.
+registries_searched:
+- registry: npm
+  query: samaya
+  first_party_hits: 0
+- registry: pypi
+  query: samaya, samaya-ai
+  first_party_hits: 0
+- registry: crates.io
+  query: samaya
+  first_party_hits: 0
+- registry: rubygems
+  query: samaya
+  first_party_hits: 0
+github_org:
+  url: https://github.com/samaya-ai
+  public_repos: 4
+  sdk_repos: 0
+  repos:
+  - name: frontier-finance
+    language: Python
+    description: Samaya AI's FrontierFinance Benchmark Grader
+    last_push: '2026-07-16'
+    first_party: true
+    sdk: false
+    version: null
+    published: null
+    version_note: >-
+      Source-only GitHub repository with no package-registry distribution, so there is no metadata
+      endpoint to read a version or release date from.
+  - name: sec-edgar
+    language: Python
+    last_push: '2024-08-05'
+    first_party: false
+    note: fork
+  - name: forkedTensorRT
+    language: C++
+    last_push: '2024-12-23'
+    first_party: false
+    note: fork
+  - name: links
+    last_push: '2024-09-17'
+    first_party: false
+    note: fork

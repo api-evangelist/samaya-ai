@@ -1,0 +1,68 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Samaya Public API
+  version: 1.0.0
+extends: ../openapi/samaya-ai-public-api-openapi.json
+x-generated: '2026-08-26'
+x-method: generated
+x-source: >-
+  Derived from the verbatim spec at https://api.samaya.ai/v1/openapi.json plus probes recorded in
+  security/samaya-ai-domain-security.yml and lifecycle/samaya-ai-lifecycle.yml. Adds only facts
+  observed on Samaya's own surface; the original spec is never mutated.
+actions:
+- target: $.info
+  update:
+    description: >-
+      Administrative REST API for Samaya AI tenants. Covers organization, team and team-membership
+      provisioning plus organization user listing. This is the provisioning surface — Samaya's
+      financial-research capability is exposed separately through the OAuth-protected MCP server at
+      https://mcp.samaya.ai/mcp.
+    contact:
+      name: Samaya AI
+      url: https://samaya.ai/
+      email: hello@samaya.ai
+    x-status-page: https://status.samaya.ai/
+    x-trust-center: https://trust.samaya.ai/
+    x-llms-txt: https://samaya.ai/llms.txt
+- target: $
+  update:
+    servers:
+    - url: https://api.samaya.ai
+      description: >-
+        Production. Added by overlay — the published document declares no servers[] block at all, so
+        a generated client has no base URL. Confirmed by fetching the spec from this host and by the
+        repair-api-bases reconciliation (verdict ok).
+- target: $.components.securitySchemes.WorkOsM2MAuth
+  update:
+    description: >-
+      WorkOS machine-to-machine bearer token. Sent as Authorization: Bearer <token>. Scope is the
+      authenticated customer; List Orgs returns only organizations under that customer.
+    bearerFormat: JWT
+    x-bearer-format-note: >-
+      Inferred from the WorkOS M2M product, NOT declared by Samaya. Treat as opaque.
+- target: $.paths['/v1/orgs/{org_id}/teams/{team_id}/members'].post
+  update:
+    x-partial-success: true
+    x-agentic-access:
+      action_class: write
+      consequence: reversible
+      reversal: DELETE /v1/orgs/{org_id}/teams/{team_id}/members
+      reversal_window: unstated
+    x-note: >-
+      Returns HTTP 200 even when some members fail. Always read errors[]; a 200 is not a
+      whole-request success.
+- target: $.paths['/v1/orgs/{org_id}/teams/{team_id}/members'].delete
+  update:
+    x-partial-success: true
+    x-agentic-access:
+      action_class: write
+      consequence: reversible
+      reversal: POST /v1/orgs/{org_id}/teams/{team_id}/members
+      reversal_window: unstated
+    x-note: >-
+      Re-adding a removed member does not restore their prior role — MemberEntry.role defaults to
+      MEMBER. Capture the role from List Team Members before removing.
+- target: $.paths['/v1/orgs/{org_id}/teams'].get
+  update:
+    x-note: >-
+      Check TeamOut.is_customer_modifiable before attempting any membership write on a team.

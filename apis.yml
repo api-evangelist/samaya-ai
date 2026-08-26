@@ -1,18 +1,126 @@
 aid: samaya-ai
 name: Samaya AI
-description: 'Samaya AI is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Samaya AI builds domain-trained "Expert AI Agents" for financial services — investment research,
+  client advisory and deal diligence — deployed across 10,000+ seats at bulge-bracket banks including
+  Morgan Stanley. The platform ingests filings, broker research and a firm's own proprietary documents,
+  reconciles figures across them, and cites every number it returns. Founded in 2022 by Maithra Raghu
+  (formerly Google Brain) and Fabio Petroni, it raised a $43.5M Series A led by NEA with NVentures
+  (NVIDIA), Databricks Ventures, Eric Schmidt and Yann LeCun participating. Its machine surface is
+  agent-first: a live OAuth-protected remote MCP server at mcp.samaya.ai that connects ChatGPT, Claude
+  and other AI applications to Samaya's research capabilities, plus a small "Samaya Public API" for
+  org/team/user provisioning and an authenticated GraphQL endpoint behind the app.
+image: https://cdn.prod.website-files.com/68d859e7b33c148e692a2d17/68e48e3a26edcad357d09fa9_open-graph-image.png
 url: https://raw.githubusercontent.com/api-evangelist/samaya-ai/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
-- Company
-apis: []
+- Artificial Intelligence
+- Financial Services
+- Investment Research
+- AI Agents
+- MCP
+- agent-native
+- Capital Markets
+- Enterprise Search
+- Retrieval
+- GraphQL
+tags_raw:
+- artificial-intelligence
+- financial-services
+- investment-research
+- ai-agents
+- mcp
+- agent-native
+- capital-markets
+- enterprise-search
+- retrieval
+- graphql
+apis:
+- name: Samaya Public API
+  description: >-
+    REST API published at https://api.samaya.ai/v1/openapi.json as "Samaya Public API" (OpenAPI 3.0.2).
+    Six operations covering organization, team and team-membership administration plus user listing —
+    list orgs, list teams, list/add/remove team members in bulk by email, and list org users with an
+    optional email filter. Cursor-paginated. Authenticated with a WorkOS machine-to-machine bearer token
+    (securityScheme WorkOsM2MAuth), which makes this the tenant-provisioning surface for enterprise
+    Samaya deployments rather than the research/agent surface.
+  humanURL: https://api.samaya.ai/v1/openapi.json
+  baseURL: https://api.samaya.ai
+  tags:
+  - Financial Services
+  - Provisioning
+  - User Management
+  - Enterprise
+  tags_raw:
+  - financial-services
+  - provisioning
+  - user-management
+  - enterprise
+  properties:
+  - type: OpenAPI
+    url: openapi/samaya-ai-public-api-openapi.json
+  - type: Overlay
+    url: overlays/samaya-ai-public-api-overlay.yaml
+  - type: Authentication
+    url: authentication/samaya-ai-authentication.yml
+  - type: Conventions
+    url: conventions/samaya-ai-conventions.yml
+  - type: DataModel
+    url: data-model/samaya-ai-data-model.yml
+  - type: ErrorCatalog
+    url: errors/samaya-ai-problem-types.yml
+- name: Samaya MCP Server
+  description: >-
+    Hosted remote MCP server at https://mcp.samaya.ai/mcp that connects ChatGPT, Claude and other AI
+    applications to Samaya's expert financial research capabilities. Live and reachable: an anonymous
+    tools/list POST returns HTTP 401 with an RFC 9728 WWW-Authenticate challenge pointing at
+    /.well-known/oauth-protected-resource/mcp, and the authorization server at mcp.samaya.ai publishes
+    RFC 8414 metadata with dynamic client registration and PKCE S256. Access is request-gated behind the
+    "Explore MCP" form on samaya.ai; the tool list is therefore not anonymously enumerable.
+  humanURL: https://samaya.ai/
+  baseURL: https://mcp.samaya.ai/mcp
+  tags:
+  - MCP
+  - agent-native
+  - Investment Research
+  - AI Agents
+  tags_raw:
+  - mcp
+  - agent-native
+  - investment-research
+  - ai-agents
+  properties:
+  - type: MCPServer
+    url: mcp/samaya-ai-mcp.yml
+  - type: MCPServer
+    url: https://mcp.samaya.ai/mcp
+  - type: ToolCrosswalk
+    url: mcp/samaya-ai-tool-crosswalk.yml
+  - type: OAuthScopes
+    url: scopes/samaya-ai-scopes.yml
+  - type: WellKnown
+    url: well-known/samaya-ai-well-known.yml
+- name: Samaya GraphQL API
+  description: >-
+    Application GraphQL endpoint at https://api.samaya.ai/graphql/ serving the Samaya web app at
+    app.samaya.ai. The API host root 302s to /graphql/, and an anonymous introspection POST returns
+    HTTP 401 "Unauthorized", so the schema is authentication-gated and was not captured. Recorded as a
+    discovered-but-gated surface, never fabricated.
+  humanURL: https://app.samaya.ai/
+  baseURL: https://api.samaya.ai/graphql/
+  tags:
+  - GraphQL
+  - Financial Services
+  tags_raw:
+  - graphql
+  - financial-services
+  properties:
+  - type: GraphQL
+    url: https://api.samaya.ai/graphql/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +128,63 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.hiive.com/securities/samaya-ai-stock
+  url: https://samaya.ai/
+- type: APIReference
+  url: https://api.samaya.ai/v1/openapi.json
+- type: Blog
+  url: https://samaya.ai/blog
+- type: GitHubOrganization
+  url: https://github.com/samaya-ai
+- type: SignUp
+  url: https://app.samaya.ai/sign-in
+- type: Login
+  url: https://app.samaya.ai/sign-in
+- type: PrivacyPolicy
+  url: https://samaya.ai/privacy/privacy
+- type: Support
+  url: mailto:hello@samaya.ai
+- type: StatusPage
+  url: https://status.samaya.ai/
+- type: TrustCenter
+  url: https://trust.samaya.ai/
+- type: TrustCenter
+  url: security/samaya-ai-trust-center.yml
+- type: Compliance
+  url: https://trust.samaya.ai/
+- type: LLMsTxt
+  url: llms/samaya-ai-llms.txt
+- type: MCPServer
+  url: mcp/samaya-ai-mcp.yml
+- type: WellKnown
+  url: well-known/samaya-ai-well-known.yml
+- type: Authentication
+  url: authentication/samaya-ai-authentication.yml
+- type: OAuthScopes
+  url: scopes/samaya-ai-scopes.yml
+- type: Conventions
+  url: conventions/samaya-ai-conventions.yml
+- type: Lifecycle
+  url: lifecycle/samaya-ai-lifecycle.yml
+- type: Conformance
+  url: conformance/samaya-ai-conformance.yml
+- type: ErrorCatalog
+  url: errors/samaya-ai-problem-types.yml
+- type: DataModel
+  url: data-model/samaya-ai-data-model.yml
+- type: DomainSecurity
+  url: security/samaya-ai-domain-security.yml
+- type: RateLimits
+  url: rate-limits/samaya-ai-rate-limits.yml
+- type: Plans
+  url: plans/samaya-ai-plans-pricing.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/samaya-ai-public-api-overlay.yaml
+- type: Research
+  url: https://samaya.ai/research
+x-enrichment:
+  date: '2026-08-26'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

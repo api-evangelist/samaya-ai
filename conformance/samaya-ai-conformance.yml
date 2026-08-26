@@ -1,0 +1,81 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  openapi/samaya-ai-public-api-openapi.json, well-known/*.json, https://trust.samaya.ai/,
+  https://samaya.ai/llms.txt
+standards:
+- id: openapi
+  name: OpenAPI Specification
+  conforms: true
+  version: 3.0.2
+  evidence: >-
+    https://api.samaya.ai/v1/openapi.json returns a parsing OpenAPI 3.0.2 document with 4 paths,
+    6 operations, unique operationIds, tags, summaries, descriptions and 15 reusable
+    components.schemas.
+- id: oauth2
+  name: OAuth 2.1 authorization code with PKCE
+  conforms: true
+  evidence: >-
+    https://mcp.samaya.ai/.well-known/oauth-authorization-server declares response_types_supported
+    [code], grant_types_supported [authorization_code, refresh_token] and
+    code_challenge_methods_supported [S256].
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: true
+  evidence: 200 JSON document at https://mcp.samaya.ai/.well-known/oauth-authorization-server
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+  conforms: true
+  evidence: >-
+    The MCP server's 401 WWW-Authenticate header carries
+    resource_metadata="https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp", which
+    resolves 200 with resource, authorization_servers and bearer_methods_supported.
+- id: rfc7591
+  name: OAuth 2.0 Dynamic Client Registration (RFC 7591)
+  conforms: true
+  evidence: registration_endpoint https://mcp.samaya.ai/register published in the AS metadata
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    Live JSON-RPC 2.0 endpoint at https://mcp.samaya.ai/mcp answering tools/list with a
+    spec-compliant 401 + resource_metadata challenge. Advertised on samaya.ai for ChatGPT and Claude.
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: https://samaya.ai/llms.txt returns a 1,700-byte llms.txt-format document (200)
+- id: rfc9457
+  name: Problem Details for HTTP APIs (RFC 9457)
+  conforms: false
+  evidence: >-
+    The OpenAPI declares only 200 responses on all six operations and no application/problem+json
+    media type. Observed errors are bare JSON (MCP) or plain text (GraphQL "Unauthorized").
+- id: rfc9116
+  name: security.txt (RFC 9116)
+  conforms: false
+  evidence: /.well-known/security.txt returned 404 on samaya.ai, api.samaya.ai and mcp.samaya.ai
+- id: openid-connect
+  name: OpenID Connect Discovery
+  conforms: false
+  evidence: /.well-known/openid-configuration returned 404 on every Samaya host
+- id: soc2
+  name: SOC 2
+  conforms: true
+  evidence: >-
+    Samaya's own llms.txt states "SOC 2 compliant with user-level access controls", and the company
+    runs a Vanta-hosted trust center at https://trust.samaya.ai/ (200, title "Samaya AI Trust
+    Center"). The certification report itself is behind the trust center's access request, so the
+    scope and type (I vs II) were not verified.
+domain_standard:
+  market: financial services / investment research
+  declared: none
+  probed:
+  - fix
+  - iso-20022
+  - fdx
+  - x12
+  note: >-
+    REWARD-ONLY dimension, correctly left empty. The published contract is an org/team/user
+    provisioning API and declares no financial-messaging or market-data standard — no FIX, ISO 20022,
+    FDX or OFX shape appears anywhere in the spec. The research surface where such a standard could
+    plausibly appear (MCP) is auth-gated, so no claim is made in either direction.

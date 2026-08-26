@@ -1,0 +1,51 @@
+generated: '2026-08-26'
+method: probed
+source: https://trust.samaya.ai/
+trust_center:
+  url: https://trust.samaya.ai/
+  status: 200
+  vendor: Vanta
+  vendor_evidence: >-
+    The page loads assets.vanta.com/static/index-trust-report-*.js, carries
+    data-slugid="it86lsjv4nvr81b4qzc24m", and its og:image is served from app.vanta.com/doc.
+  title: Samaya AI Trust Center
+  canonical: https://trust.samaya.ai
+certifications:
+- name: SOC 2
+  claimed: true
+  verified: false
+  source: https://samaya.ai/llms.txt
+  quote: SOC 2 compliant with user-level access controls
+  note: >-
+    First-party claim published by Samaya in its own llms.txt. The report itself sits behind the
+    trust center's document-access request, so type (I vs II), scope and audit period were not
+    verified.
+certifications_note: >-
+  The Vanta trust center renders its control and certification list client-side; a server-side fetch
+  returns only the 6.4KB React shell, so the full framework list could not be read without executing
+  JavaScript. Recorded as unreadable rather than absent — the surface exists and is live.
+subprocessors:
+  published: unknown
+  note: Not readable from the server-rendered shell.
+documents:
+  access: request
+  note: Vanta trust centers gate report downloads behind an NDA/email request flow.
+related:
+  privacy_policy: https://samaya.ai/privacy/privacy
+  applicant_privacy: https://samaya.ai/privacy/applicants
+  security_contact: null
+  security_contact_note: >-
+    No /.well-known/security.txt on any Samaya host (404 on samaya.ai, api.samaya.ai,
+    mcp.samaya.ai), and no dedicated security or vulnerability-disclosure page exists. The only
+    published contacts are hello@samaya.ai and feedback@samaya.ai.
+evidence:
+- url: https://trust.samaya.ai/
+  status: 200
+- url: https://samaya.ai/llms.txt
+  status: 200
+- url: https://samaya.ai/.well-known/security.txt
+  status: 404
+- url: https://api.samaya.ai/.well-known/security.txt
+  status: 404
+- url: https://mcp.samaya.ai/.well-known/security.txt
+  status: 404

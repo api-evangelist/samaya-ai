@@ -1,0 +1,29 @@
+generated: '2026-08-26'
+method: probed
+source: https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp
+scope_count: 0
+scopes: []
+note: >-
+  Samaya's MCP authorization server publishes RFC 9728 protected-resource metadata with an EMPTY
+  scopes_supported array, and the RFC 8414 authorization-server document declares no scopes_supported
+  key at all. This is a measured absence, not an unchecked field: the server runs OAuth 2.1 with
+  dynamic client registration and PKCE S256 but exposes no granular permission vocabulary, so an
+  agent connecting to it cannot request or be granted least privilege at the protocol level. The
+  published REST OpenAPI declares no oauth2 securityScheme (it uses a WorkOS bearer token), so it
+  contributes no scopes either.
+authorization_server:
+  issuer: https://mcp.samaya.ai/
+  authorization_endpoint: https://mcp.samaya.ai/authorize
+  token_endpoint: https://mcp.samaya.ai/token
+  registration_endpoint: https://mcp.samaya.ai/register
+  revocation_endpoint: https://mcp.samaya.ai/revoke
+  code_challenge_methods_supported:
+  - S256
+docs: null
+evidence:
+- url: https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp
+  status: 200
+  scopes_supported: []
+- url: https://mcp.samaya.ai/.well-known/oauth-authorization-server
+  status: 200
+  scopes_supported: absent

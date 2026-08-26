@@ -1,0 +1,60 @@
+generated: '2026-08-26'
+method: probed
+source: >-
+  https://samaya.ai/ ("Connect ChatGPT, Claude, and other AI applications to Samaya's expert
+  financial research capabilities through MCP or API.") plus live JSON-RPC and OAuth discovery
+  probes of https://mcp.samaya.ai/
+name: Samaya MCP Server
+status: live
+deployment:
+  mode: remote
+  endpoint: https://mcp.samaya.ai/mcp
+  auth: oauth
+  verified: probed
+server:
+  transport: streamable-http
+  jsonrpc: '2.0'
+  access: request-gated
+  access_note: >-
+    The samaya.ai homepage exposes the server through an "Explore MCP" call to action that opens a
+    HubSpot request form rather than a docs page or a self-serve connect flow. The endpoint itself is
+    live and reachable; obtaining credentials requires contacting Samaya.
+probe:
+  request:
+    method: POST
+    url: https://mcp.samaya.ai/mcp
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    accept: application/json, text/event-stream
+  http_status: 401
+  www_authenticate: >-
+    Bearer error="invalid_token", error_description="Authentication failed. The provided bearer token
+    is invalid, expired, or no longer recognized by the server. To resolve: clear authentication
+    tokens in your MCP client and reconnect. Your client should automatically re-register and obtain
+    new tokens.", resource_metadata="https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp"
+  verdict: >-
+    Auth-gated. The server correctly implements the MCP authorization spec — it answers an anonymous
+    call with an RFC 9728 resource_metadata pointer instead of a bare 401 — but the tool list and the
+    per-tool inputSchemas require an authenticated introspection and were NOT captured. No tool names
+    are recorded here because none are published anywhere; inventing them would be fabrication.
+oauth:
+  issuer: https://mcp.samaya.ai/
+  protected_resource_metadata: https://mcp.samaya.ai/.well-known/oauth-protected-resource/mcp
+  authorization_server_metadata: https://mcp.samaya.ai/.well-known/oauth-authorization-server
+  authorization_endpoint: https://mcp.samaya.ai/authorize
+  token_endpoint: https://mcp.samaya.ai/token
+  registration_endpoint: https://mcp.samaya.ai/register
+  revocation_endpoint: https://mcp.samaya.ai/revoke
+  dynamic_client_registration: true
+  pkce: S256
+  scopes_supported: []
+  scopes_note: >-
+    The protected-resource document publishes an EMPTY scopes_supported array — the server declares no
+    granular scopes, so an agent cannot request least privilege at the protocol level.
+tools: []
+tools_note: >-
+  Empty by design. Samaya publishes no tool list in llms.txt, no docs site, and no MCP registry entry,
+  and the live tools/list call is auth-gated. Populate only from an authenticated tools/list response.
+clients_supported:
+- ChatGPT
+- Claude
+clients_source: https://samaya.ai/
