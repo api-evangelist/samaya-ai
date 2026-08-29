@@ -10,6 +10,17 @@ description: >-
   agent-first: a live OAuth-protected remote MCP server at mcp.samaya.ai that connects ChatGPT, Claude
   and other AI applications to Samaya's research capabilities, plus a small "Samaya Public API" for
   org/team/user provisioning and an authenticated GraphQL endpoint behind the app.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/68d859e7b33c148e692a2d17/68e48e3a26edcad357d09fa9_open-graph-image.png
 url: https://raw.githubusercontent.com/api-evangelist/samaya-ai/refs/heads/main/apis.yml
 x-type: company
