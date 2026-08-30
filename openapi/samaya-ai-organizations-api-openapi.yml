@@ -1,0 +1,56 @@
+openapi: 3.2.0
+info:
+  title: Samaya Public Organizations API
+  version: '1.0'
+  description: ''
+servers: null
+tags:
+- name: Organizations
+paths:
+  /v1/orgs/:
+    get:
+      operationId: samaya_api_rest_views_teams_list_orgs
+      summary: List Orgs
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgListResponse'
+      description: List all organizations under the authenticated customer.
+      tags:
+      - Organizations
+      security:
+      - WorkOsM2MAuth: []
+components:
+  schemas:
+    OrgOut:
+      title: OrgOut
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+    OrgListResponse:
+      title: OrgListResponse
+      type: object
+      properties:
+        orgs:
+          title: Orgs
+          type: array
+          items:
+            $ref: '#/components/schemas/OrgOut'
+      required:
+      - orgs
+  securitySchemes:
+    WorkOsM2MAuth:
+      type: http
+      scheme: bearer

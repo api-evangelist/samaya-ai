@@ -1,0 +1,90 @@
+openapi: 3.2.0
+info:
+  title: Samaya Public Users API
+  version: '1.0'
+  description: ''
+servers: null
+tags:
+- name: Users
+paths:
+  /v1/orgs/{org_id}/users:
+    get:
+      operationId: samaya_api_rest_views_teams_list_users
+      summary: List Users
+      parameters:
+      - in: path
+        name: org_id
+        schema:
+          title: Org Id
+          type: integer
+        required: true
+      - in: query
+        name: email
+        schema:
+          title: Email
+          type: string
+        required: false
+      - in: query
+        name: cursor
+        schema:
+          title: Cursor
+          type: string
+        required: false
+      - in: query
+        name: limit
+        schema:
+          title: Limit
+          default: 100
+          minimum: 1
+          maximum: 500
+          type: integer
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUsersResponse'
+      description: List users in the organization. Optionally filter by email.
+      tags:
+      - Users
+      security:
+      - WorkOsM2MAuth: []
+components:
+  schemas:
+    UserOut:
+      title: UserOut
+      type: object
+      properties:
+        email:
+          title: Email
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+      required:
+      - email
+      - is_active
+    PaginatedUsersResponse:
+      title: PaginatedUsersResponse
+      type: object
+      properties:
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOut'
+        next_cursor:
+          title: Next Cursor
+          type: string
+        has_more:
+          title: Has More
+          type: boolean
+      required:
+      - data
+      - has_more
+  securitySchemes:
+    WorkOsM2MAuth:
+      type: http
+      scheme: bearer
