@@ -29,16 +29,16 @@ specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
-- Artificial Intelligence
-- Financial Services
-- Investment Research
+- artificial-intelligence
+- Financial-Services
+- investment-research
 - AI Agents
 - MCP
 - agent-native
-- Capital Markets
-- Enterprise Search
-- Retrieval
-- GraphQL
+- capital-markets
+- enterprise-search
+- retrieval
+- graphql
 tags_raw:
 - artificial-intelligence
 - financial-services
@@ -64,7 +64,7 @@ apis:
   tags:
   - MCP
   - agent-native
-  - Investment Research
+  - investment-research
   - AI Agents
   tags_raw:
   - mcp
@@ -91,8 +91,8 @@ apis:
   humanURL: https://app.samaya.ai/
   baseURL: https://api.samaya.ai/graphql/
   tags:
-  - GraphQL
-  - Financial Services
+  - graphql
+  - Financial-Services
   tags_raw:
   - graphql
   - financial-services
@@ -105,6 +105,8 @@ apis:
   humanURL: https://api.samaya.ai/v1/openapi.json
   baseURL: https://api.samaya.ai
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -123,6 +125,8 @@ apis:
   humanURL: https://api.samaya.ai/v1/openapi.json
   baseURL: https://api.samaya.ai
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -141,6 +145,8 @@ apis:
   humanURL: https://api.samaya.ai/v1/openapi.json
   baseURL: https://api.samaya.ai
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
