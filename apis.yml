@@ -29,16 +29,16 @@ specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
-- artificial-intelligence
+- Artificial Intelligence
 - Financial-Services
-- investment-research
+- Investment Research
 - AI Agents
 - MCP
 - agent-native
-- capital-markets
-- enterprise-search
-- retrieval
-- graphql
+- Capital Markets
+- Enterprise Search
+- Retrieval
+- GraphQL
 tags_raw:
 - artificial-intelligence
 - financial-services
@@ -64,7 +64,7 @@ apis:
   tags:
   - MCP
   - agent-native
-  - investment-research
+  - Investment Research
   - AI Agents
   tags_raw:
   - mcp
@@ -91,7 +91,7 @@ apis:
   humanURL: https://app.samaya.ai/
   baseURL: https://api.samaya.ai/graphql/
   tags:
-  - graphql
+  - GraphQL
   - Financial-Services
   tags_raw:
   - graphql
