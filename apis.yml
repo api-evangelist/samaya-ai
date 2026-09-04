@@ -21,6 +21,22 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Requires approval
+  confidence: medium
+  source:
+  - plans
+  - authentication
+  - scopes
+  - rate-limits
+  - security
+  generated: '2026-09-03'
+  method: derived
 image: https://cdn.prod.website-files.com/68d859e7b33c148e692a2d17/68e48e3a26edcad357d09fa9_open-graph-image.png
 url: https://raw.githubusercontent.com/api-evangelist/samaya-ai/refs/heads/main/apis.yml
 x-type: company
