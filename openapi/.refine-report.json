@@ -1,0 +1,27 @@
+{
+  "provider": "samaya-ai",
+  "sources": [
+    "_original/samaya-ai-public-api-openapi.json"
+  ],
+  "outputs": [
+    "samaya-ai-organizations-api-openapi.yml",
+    "samaya-ai-teams-api-openapi.yml",
+    "samaya-ai-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "samaya-ai-public-api-openapi.json: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "samaya-ai-public-api-openapi.json: declared missing tag: Organizations",
+    "samaya-ai-public-api-openapi.json: declared missing tag: Teams",
+    "samaya-ai-public-api-openapi.json: declared missing tag: Users",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "samaya-ai-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "samaya-ai-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "samaya-ai-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

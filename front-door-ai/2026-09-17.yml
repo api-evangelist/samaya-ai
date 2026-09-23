@@ -1,0 +1,35 @@
+# Front Door AI Index — samaya-ai — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: samaya-ai
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: samaya.ai
+  final_host: samaya.ai
+  ownership: own
+  owner: samaya-ai
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 45
+  host_score: 45
+  density: 46.44
+  words: 969
+  tiers:
+    agentic: 8
+    core: 30
+    model: 7
+  ambiguous: 9
+  top_terms:
+    AI: 28
+    agent: 8
+    AI agent: 7
+    ChatGPT: 2
+    Claude: 2
+    GPT: 2
+    Gemini: 1
+    LLMs: 1
+    MCP: 1
+    automation: 1
+    gen ai: 1

@@ -26,6 +26,17 @@ paths:
       - WorkOsM2MAuth: []
 components:
   schemas:
+    OrgListResponse:
+      title: OrgListResponse
+      type: object
+      properties:
+        orgs:
+          title: Orgs
+          type: array
+          items:
+            $ref: '#/components/schemas/OrgOut'
+      required:
+      - orgs
     OrgOut:
       title: OrgOut
       type: object
@@ -39,17 +50,6 @@ components:
       required:
       - id
       - name
-    OrgListResponse:
-      title: OrgListResponse
-      type: object
-      properties:
-        orgs:
-          title: Orgs
-          type: array
-          items:
-            $ref: '#/components/schemas/OrgOut'
-      required:
-      - orgs
   securitySchemes:
     WorkOsM2MAuth:
       type: http
