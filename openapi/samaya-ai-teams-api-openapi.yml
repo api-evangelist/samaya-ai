@@ -144,6 +144,51 @@ paths:
       - WorkOsM2MAuth: []
 components:
   schemas:
+    BulkAddResponse:
+      title: BulkAddResponse
+      type: object
+      properties:
+        added:
+          title: Added
+          type: array
+          items:
+            $ref: '#/components/schemas/AddedMember'
+        errors:
+          title: Errors
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberError'
+      required:
+      - added
+      - errors
+    AddMembersRequest:
+      title: AddMembersRequest
+      type: object
+      properties:
+        members:
+          title: Members
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberEntry'
+      required:
+      - members
+    BulkRemoveResponse:
+      title: BulkRemoveResponse
+      type: object
+      properties:
+        removed:
+          title: Removed
+          type: array
+          items:
+            type: string
+        errors:
+          title: Errors
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberError'
+      required:
+      - removed
+      - errors
     PaginatedTeamMembersResponse:
       title: PaginatedTeamMembersResponse
       type: object
@@ -162,53 +207,8 @@ components:
       required:
       - data
       - has_more
-    BulkRemoveResponse:
-      title: BulkRemoveResponse
-      type: object
-      properties:
-        removed:
-          title: Removed
-          type: array
-          items:
-            type: string
-        errors:
-          title: Errors
-          type: array
-          items:
-            $ref: '#/components/schemas/MemberError'
-      required:
-      - removed
-      - errors
-    RemoveMembersRequest:
-      title: RemoveMembersRequest
-      type: object
-      properties:
-        emails:
-          title: Emails
-          type: array
-          items:
-            type: string
-      required:
-      - emails
-    BulkAddResponse:
-      title: BulkAddResponse
-      type: object
-      properties:
-        added:
-          title: Added
-          type: array
-          items:
-            $ref: '#/components/schemas/AddedMember'
-        errors:
-          title: Errors
-          type: array
-          items:
-            $ref: '#/components/schemas/MemberError'
-      required:
-      - added
-      - errors
-    MemberEntry:
-      title: MemberEntry
+    TeamMemberOut:
+      title: TeamMemberOut
       type: object
       properties:
         email:
@@ -216,10 +216,38 @@ components:
           type: string
         role:
           title: Role
-          default: MEMBER
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+      required:
+      - email
+      - role
+      - is_active
+    MemberError:
+      title: MemberError
+      type: object
+      properties:
+        email:
+          title: Email
+          type: string
+        detail:
+          title: Detail
           type: string
       required:
       - email
+      - detail
+    TeamListResponse:
+      title: TeamListResponse
+      type: object
+      properties:
+        teams:
+          title: Teams
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamOut'
+      required:
+      - teams
     AddedMember:
       title: AddedMember
       type: object
@@ -250,8 +278,8 @@ components:
       - id
       - name
       - is_customer_modifiable
-    TeamMemberOut:
-      title: TeamMemberOut
+    MemberEntry:
+      title: MemberEntry
       type: object
       properties:
         email:
@@ -259,49 +287,21 @@ components:
           type: string
         role:
           title: Role
-          type: string
-        is_active:
-          title: Is Active
-          type: boolean
-      required:
-      - email
-      - role
-      - is_active
-    TeamListResponse:
-      title: TeamListResponse
-      type: object
-      properties:
-        teams:
-          title: Teams
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamOut'
-      required:
-      - teams
-    AddMembersRequest:
-      title: AddMembersRequest
-      type: object
-      properties:
-        members:
-          title: Members
-          type: array
-          items:
-            $ref: '#/components/schemas/MemberEntry'
-      required:
-      - members
-    MemberError:
-      title: MemberError
-      type: object
-      properties:
-        email:
-          title: Email
-          type: string
-        detail:
-          title: Detail
+          default: MEMBER
           type: string
       required:
       - email
-      - detail
+    RemoveMembersRequest:
+      title: RemoveMembersRequest
+      type: object
+      properties:
+        emails:
+          title: Emails
+          type: array
+          items:
+            type: string
+      required:
+      - emails
   securitySchemes:
     WorkOsM2MAuth:
       type: http
