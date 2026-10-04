@@ -53,19 +53,6 @@ paths:
       - WorkOsM2MAuth: []
 components:
   schemas:
-    UserOut:
-      title: UserOut
-      type: object
-      properties:
-        email:
-          title: Email
-          type: string
-        is_active:
-          title: Is Active
-          type: boolean
-      required:
-      - email
-      - is_active
     PaginatedUsersResponse:
       title: PaginatedUsersResponse
       type: object
@@ -84,6 +71,19 @@ components:
       required:
       - data
       - has_more
+    UserOut:
+      title: UserOut
+      type: object
+      properties:
+        email:
+          title: Email
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+      required:
+      - email
+      - is_active
   securitySchemes:
     WorkOsM2MAuth:
       type: http
