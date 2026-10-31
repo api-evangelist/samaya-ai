@@ -64,5 +64,129 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Samaya AI is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.hiive.com/securities/samaya-ai-stock
+Samaya AI builds domain-trained "Expert AI Agents" for financial services — investment research, client advisory and deal diligence — deployed across 10,000+ seats at bulge-bracket banks including Morgan Stanley. The platform ingests filings, broker research and a firm's own proprietary documents, reconciles figures across them, and cites every number it returns. Founded in 2022 by Maithra Raghu (formerly Google Brain) and Fabio Petroni, it raised a $43.5M Series A led by NEA with NVentures (NVIDIA), Databricks Ventures, Eric Schmidt and Yann LeCun participating. Its machine surface is agent-first: a live OAuth-protected remote MCP server at mcp.samaya.ai that connects ChatGPT, Claude and other AI applications to Samaya's research capabilities, plus a small "Samaya Public API" for org/team/user provisioning and an authenticated GraphQL endpoint behind the app.
+
+**Areas:** Artificial Intelligence · Financial Services · Investment Research · AI Agents · MCP · Agent-Native · Capital Markets · Enterprise Search · Retrieval · GraphQL
+
+## Samaya AI on APIs.io
+
+Everything profiled for Samaya AI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/samaya-ai/](https://apis.io/providers/samaya-ai/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- [Samaya MCP Server](https://apis.io/apis/samaya-ai/samaya-mcp-server/) — Hosted remote MCP server at https://mcp.samaya.ai/mcp that connects ChatGPT, Claude and other AI applications to Samaya's expert financial research…
+- [Samaya GraphQL API](https://apis.io/apis/samaya-ai/samaya-graphql-api/) — Application GraphQL endpoint at https://api.samaya.ai/graphql/ serving the Samaya web app at app.samaya.ai. The API host root 302s to /graphql/, and an…
+- [Samaya AI Organizations API](https://apis.io/apis/samaya-ai/samaya-ai-organizations-api/) — The Organizations API from Samaya AI — 1 operation(s) for organizations.
+- [Samaya AI Teams API](https://apis.io/apis/samaya-ai/samaya-ai-teams-api/) — The Teams API from Samaya AI — 2 operation(s) for teams.
+- [Samaya AI Users API](https://apis.io/apis/samaya-ai/samaya-ai-users-api/) — The Users API from Samaya AI — 1 operation(s) for users.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Samaya MCP Server](https://apis.io/servers/samaya-ai/samaya-mcp-server/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Samaya Ai Public Api Overlay](https://apis.io/overlays/samaya-ai/samaya-ai-public-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Samaya Ai Authentication](https://apis.io/security/samaya-ai/samaya-ai-authentication/)
+- [Samaya Ai Domain Security](https://apis.io/security/samaya-ai/samaya-ai-domain-security/)
+- [Samaya Ai Trust Center](https://apis.io/security/samaya-ai/samaya-ai-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Samaya Ai Scopes](https://apis.io/scopes/samaya-ai/samaya-ai-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Samaya Ai Plans Pricing](https://apis.io/plans/samaya-ai/samaya-ai-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Samaya Ai Rate Limits](https://apis.io/rate-limits/samaya-ai/samaya-ai-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://samaya.ai/)
+- [API reference](https://api.samaya.ai/v1/openapi.json)
+- [Sign up](https://app.samaya.ai/sign-in)
+- [Blog](https://samaya.ai/blog)
+- [Compliance](https://trust.samaya.ai/)
+- [Trust centre](https://trust.samaya.ai/)
+- [Privacy policy](https://samaya.ai/privacy/privacy)
+- [GitHub](https://github.com/samaya-ai)
+- [Status](https://status.samaya.ai/)
+
+## API Evangelist rating
+
+**Kin Score 35.1** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 41.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 28.0 |
+| Access clarity | 26.3 |
+
+**Agent readiness 44.6** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 32.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/samaya-ai/](https://apis.io/providers/samaya-ai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Samaya AI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/samaya-ai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
